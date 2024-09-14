@@ -3,7 +3,7 @@ def gcd(a, b)                                                             # фу
   b.zero? ? a : gcd(b, a % b)                                             # если второй числитель равен нулю, возвращаем первый
 end
 
-def sumOfDivisorsRelativelyPrime(number)                                  # функция подсчета суммы делителей
+def sum_of_divisors_relatively_prime(number)                                  # функция подсчета суммы делителей
   sum_of_digits = number.to_s.chars.map(&:to_i).sum                       # сумма цифр
   product_of_digits = number.to_s.chars.map(&:to_i).reduce(1, :*)         # произведение цифр
 
@@ -20,4 +20,4 @@ end
 
 puts "Введите целое положительное число: "
 number = gets.to_i                                                        # вводим число
-puts "Сумма делителей, взаимно простых с суммой цифр и не взаимно простых с произведением цифр: #{sumOfDivisorsRelativelyPrime(number)}"
+puts "Сумма делителей, взаимно простых с суммой цифр и не взаимно простых с произведением цифр: #{sum_of_divisors_relatively_prime(number)}"
