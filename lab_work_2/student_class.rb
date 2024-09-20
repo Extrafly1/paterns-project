@@ -10,6 +10,27 @@ class Student
     set_contacts(args) if args.key?(:phone) || args.key?(:telegram) || args.key?(:email) || args.key?(:git) # Проверка на наличие контактных данных
   end
 
+  def self.from_string(input)
+    begin
+      data = input.split(",").map(&:strip)
+      raise ArgumentError, "Неверный формат строки" if data.size < 4
+
+      args = {
+        surname: data[0],
+        name: data[1],
+        patronymic: data[2],
+        phone: data[3],
+        telegram: data[4],
+        email: data[5],
+        git: data[6]
+      }.compact
+
+      new(args)  # Вызов стандартного конструктора
+    rescue ArgumentError => e
+      raise ArgumentError, "Ошибка при парсинге: #{e.message}"
+    end
+  end
+  
   def generate_id
     Random.rand(1000..9999)
   end
