@@ -6,10 +6,12 @@ class Student
     @surname = args[:surname] || "Не указано"
     @name = args[:name] || "Не указано"
     @patronymic = args[:patronymic]
-    self.phone = args[:phone]
-    self.telegram = args[:telegram]
-    self.email = args[:email]
-    self.git = args[:git]
+    self.phone = args[:phone] if args.key?(:phone)
+    self.telegram = args[:telegram] if args.key?(:telegram)
+    self.email = args[:email] if args.key?(:email)
+    self.git = args[:git] if args.key?(:git)
+    
+    validate
   end
 
   def generate_id
@@ -50,8 +52,9 @@ class Student
   def self.validate_git(git)
     git.match?(/\A(https?:\/\/|git@)[-a-zA-Z0-9@:%_\+.~#=]+(\.[a-zA-Z]{2,6}|:[0-9]{1,5})?\/[-a-zA-Z0-9@:%_\+.~#=]+\/[-a-zA-Z0-9._~%]+\.git\z/)
   end
+  
   def phone=(phone)
-    if Student.validate_phone(phone)
+    if phone.nil? || Student.validate_phone(phone)
       @phone = phone
     else
       raise ArgumentError, "Неправильно введен телефон"
@@ -59,7 +62,7 @@ class Student
   end
 
   def email=(email)
-    if Student.validate_email(email)
+    if email.nil? || Student.validate_email(email)
       @email = email
     else
       raise ArgumentError, "Неправильно введен email"
@@ -67,7 +70,7 @@ class Student
   end
 
   def git=(git)
-    if Student.validate_git(git)
+    if git.nil? || Student.validate_git(git)
       @git = git
     else
       raise ArgumentError, "Неправильно введен git"
@@ -75,10 +78,19 @@ class Student
   end
 
   def telegram=(telegram)
-    if Student.validate_telegram(telegram)
+    if telegram.nil? || Student.validate_telegram(telegram)
       @telegram = telegram
     else
       raise ArgumentError, "Неправильно введен телеграм"
     end
+  end
+
+  def contact_info_present?
+    !phone.nil? || !telegram.nil? || !email.nil?
+  end
+
+  def validate
+    raise ArgumentError, "Отсутствует Git URL" unless git
+    raise ArgumentError, "Отсутствует контактная информация" unless contact_info_present?
   end
 end
