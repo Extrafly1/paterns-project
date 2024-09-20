@@ -1,15 +1,15 @@
 class Student
   attr_accessor :id, :surname, :name, :patronymic, :phone, :telegram, :email, :git
 
-  def initialize(surname, name, patronymic = nil, phone = nil, telegram = nil, email = nil, git = nil)
+  def initialize(args = {})
     @id = generate_id
-    @surname = surname
-    @name = name
-    @patronymic = patronymic
-    @phone = phone
-    @telegram = telegram
-    @email = email
-    @git = git
+    @surname = args[:surname] || "Не указано"
+    @name = args[:name] || "Не указано"
+    @patronymic = args[:patronymic]
+    @phone = args[:phone]
+    @telegram = args[:telegram]
+    @email = args[:email]
+    @git = args[:git]
   end
 
   def generate_id
