@@ -7,7 +7,7 @@ class Student
     @name = args[:name] || "Не указано"
     @patronymic = args[:patronymic]
     
-    set_contacts(args) if args.key?(:phone) || args.key?(:telegram) || args.key?(:email) || args.key?(:git)
+    set_contacts(args) if args.key?(:phone) || args.key?(:telegram) || args.key?(:email) || args.key?(:git) # Проверка на наличие контактных данных
   end
 
   def generate_id
@@ -46,14 +46,14 @@ class Student
   end
 
   def self.validate_git(git)
-    git.match?(/\A(https?:\/\/|git@)[-a-zA-Z0-9@:%_\+.~#=]+(\.[a-zA-Z]{2,6}|:[0-9]{1,5})?\/[-a-zA-Z0-9@:%_\+.~#=]+\/[-a-zA-Z0-9._~%]+\.git\z/)
+    git.match?(/\A(https?:\/\/|git@)[-a-zA-Z0-9@:%_\+.~#=]+(\.[a-zA-Z]{2,6}|:[0-9]{1,5})?\/[-a-zA-Z0-9@:%_\+.~#=]+\/[-a-zA-Z0-9._~%]+\.git\z/) # Проверка на наличие Git URL
   end
   
   def set_contacts(args = {})
-    @phone = args[:phone] if args.key?(:phone) && self.class.validate_phone(args[:phone])
-    @telegram = args[:telegram] if args.key?(:telegram) && self.class.validate_telegram(args[:telegram])
-    @email = args[:email] if args.key?(:email) && self.class.validate_email(args[:email])
-    @git = args[:git] if args.key?(:git) && self.class.validate_git(args[:git])
+    @phone = args[:phone] if args.key?(:phone) && self.class.validate_phone(args[:phone]) #
+    @telegram = args[:telegram] if args.key?(:telegram) && self.class.validate_telegram(args[:telegram]) # 
+    @email = args[:email] if args.key?(:email) && self.class.validate_email(args[:email]) #
+    @git = args[:git] if args.key?(:git) && self.class.validate_git(args[:git]) # 
   end
 
   def phone=(phone)
