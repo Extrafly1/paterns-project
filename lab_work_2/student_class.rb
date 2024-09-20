@@ -6,10 +6,10 @@ class Student
     @surname = args[:surname] || "Не указано"
     @name = args[:name] || "Не указано"
     @patronymic = args[:patronymic]
-    @phone = args[:phone]
-    @telegram = args[:telegram]
-    @email = args[:email]
-    @git = args[:git]
+    self.phone = args[:phone]
+    self.telegram = args[:telegram]
+    self.email = args[:email]
+    self.git = args[:git]
   end
 
   def generate_id
@@ -39,6 +39,17 @@ class Student
     #     - \z: Указывает на конец строки.
   end
 
+  def self.validate_email(email)
+    email.match?(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i)
+  end
+
+  def self.validate_telegram(telegram)
+    telegram.match?(/\A@[a-zA-Z0-9_]+\z/)
+  end
+
+  def self.validate_git(git)
+    git.match?(/\A(https?:\/\/|git@)[-a-zA-Z0-9@:%_\+.~#=]+(\.[a-zA-Z]{2,6}|:[0-9]{1,5})?\/[-a-zA-Z0-9@:%_\+.~#=]+\/[-a-zA-Z0-9._~%]+\.git\z/)
+  end
   def phone=(phone)
     if Student.validate_phone(phone)
       @phone = phone
@@ -47,4 +58,27 @@ class Student
     end
   end
 
+  def email=(email)
+    if Student.validate_email(email)
+      @email = email
+    else
+      raise ArgumentError, "Неправильно введен email"
+    end
+  end
+
+  def git=(git)
+    if Student.validate_git(git)
+      @git = git
+    else
+      raise ArgumentError, "Неправильно введен git"
+    end
+  end
+
+  def telegram=(telegram)
+    if Student.validate_telegram(telegram)
+      @telegram = telegram
+    else
+      raise ArgumentError, "Неправильно введен телеграм"
+    end
+  end
 end
