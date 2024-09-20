@@ -23,21 +23,21 @@ begin
   
     student2 = Student.from_string("Петров, Петр")  # Это вызовет ошибку при валидации
     puts student2
-  rescue ArgumentError => e
+rescue ArgumentError => e
     puts e.message
-  end
+end
   
-  begin
+begin
     student3 = Student.from_string("Сидоров, Сидор, Сидорович, 1234567890")
     puts student3
     # Это вызовет ошибку, так как отсутствует Git URL
-  rescue ArgumentError => e
+rescue ArgumentError => e
     puts e.message
-  end
+end
   
-  begin
+begin
     student4 = Student.from_string("Кузнецов, Сергей, Сергеевич, +1 234-567-8901, @sergey, sergey@example.com, https://github.com/sergey/repo.git")
     puts student4
-  rescue ArgumentError => e
+rescue ArgumentError => e
     puts e.message
-  end
+end

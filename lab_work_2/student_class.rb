@@ -30,7 +30,7 @@ class Student
       raise ArgumentError, "Ошибка при парсинге: #{e.message}"
     end
   end
-  
+
   def generate_id
     Random.rand(1000..9999)
   end
@@ -116,5 +116,39 @@ class Student
   def validate
     raise ArgumentError, "Отсутствует Git URL" unless @git
     raise ArgumentError, "Отсутствует контактная информация" unless contact_info_present?
+  end
+
+  def getInfo
+    initials = "#{@surname} #{initials}"
+    contact = contact_info
+    "#{initials}; Гит: #{@git}; Связь: #{contact}"
+  end
+
+  def contact_info
+    if @phone
+      "Телефон: #{@phone}"
+    elsif @telegram
+      "Телеграм: #{@telegram}"
+    elsif @email
+      "Email: #{@email}"
+    else
+      "Нет контактной информации"
+    end
+  end
+
+  def initials
+    "#{@name[0]}.#{@patronymic ? " #{@patronymic[0]}." : ''}"
+  end
+
+  def get_surname_and_initials
+    "#{@surname} #{initials}"
+  end
+
+  def get_git
+    @git
+  end
+
+  def get_contact
+    contact_info
   end
 end
