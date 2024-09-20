@@ -1,9 +1,18 @@
 require_relative 'student_class'
 
-student1 = Student.new("Иванов", "Иван", "Иванович", "1234567890", "@ivan", "ivan@example.com", "github.com/ivan")
-student2 = Student.new("Петров", "Петр", "Петрович", "0987654321", "@petr", "petr@example.com", "github.com/petr")
-student3 = Student.new("Сидоров", "Сидор", "Сидорович", "1357924680", "@sidor", "sidor@example.com", "github.com/sidor")
+begin
+    student1 = Student.new(surname: "Иванов", name: "Иван", patronymic: "Иванович", phone: "+1 234-567-8901", git: "https://github.com/ivan/repo.git")
+    puts student1
 
-puts student1
-puts student2
-puts student3
+    student2 = Student.new(surname: "Петров", name: "Петр")
+    puts student2
+
+    student3 = Student.new(surname: "Сидоров", name: "Сидор", patronymic: "Сидорович", phone: "1234567890")
+    puts student3
+
+    student4 = Student.new(surname: "Кузнецов", name: "Сергей", git: "https://github.com/serezha/repo.git")
+    puts student4
+
+rescue ArgumentError => e
+    puts e.message
+end
