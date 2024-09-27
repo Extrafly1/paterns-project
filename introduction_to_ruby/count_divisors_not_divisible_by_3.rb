@@ -1,4 +1,4 @@
-                                                # Первый метод четвёртого задания
+                                                # Первый метод четвёртого задания.
 def count_divisors_not_divisible_by_3(number)        # функция подсчета делителей
   count = 0
   (1..number).each do |i|                       # перебираем числа от 1 до number
