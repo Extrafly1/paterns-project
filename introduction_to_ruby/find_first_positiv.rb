@@ -1,4 +1,4 @@
-def find_first_positive_index_with_for(array)      # найти первый положительный элемент в массиве
+def find_first_positive_index_with_for(array)      # найти первый положительный элемент в массиве.
   for index in 0...array.length               # перебираем остальные
     return index if array[index] > 0          # если элемент положительный
   end
