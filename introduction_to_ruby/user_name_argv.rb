@@ -7,6 +7,7 @@ else                              # иначе
 end
 ARGV.clear                        # очистим массив ARGV
 
+lang = gets.chomp
 case lang
 when "ruby"
   puts "Всё понятно, подлиза"
