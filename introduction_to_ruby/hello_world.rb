@@ -1,1 +1,1 @@
-puts("Hello World") # вывод на экран Hello World
+puts("Hello World") # вывод на экран Hello World.

@@ -1,5 +1,5 @@
 puts "enter command in Ruby: "
-ruby_command = gets.chomp         # вводим команду в Ruby
+ruby_command = gets.chomp         # вводим команду в Ruby.
 
 begin                             # обрабатываем ошибки
   result = eval(ruby_command)     # выполняем команду

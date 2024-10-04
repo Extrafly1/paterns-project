@@ -1,4 +1,4 @@
-def find_minimum_with_for(array)           # найти минимальный элемент в массиве
+def find_minimum_with_for(array)           # найти минимальный элемент в массиве.
   min = array[0]                        # принимаем первый элемент как минимальный
   for i in array                        # перебираем остальные
     min = i if i < min                  # если элемент меньше минимального

@@ -1,4 +1,4 @@
-if ARGV.empty?                    # если нет аргументов
+if ARGV.empty?                    # если нет аргументов.
   puts "Please enter your name"   # выведем следующее сообщение
   exit                            # выход, добавил чтоб попробовать как прерывается код
 else                              # иначе
@@ -7,6 +7,7 @@ else                              # иначе
 end
 ARGV.clear                        # очистим массив ARGV
 
+lang = gets.chomp
 case lang
 when "ruby"
   puts "Всё понятно, подлиза"
