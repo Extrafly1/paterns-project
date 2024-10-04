@@ -1,4 +1,7 @@
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\lab_work_2\student_class.rb'
+require_relative 'base_student'
+require_relative 'student'
+require_relative 'student_short'
+
 
 begin
     student1 = Student.new(surname: "Иванов", name: "Иван", patronymic: "Иванович", phone: "+1 234-567-8901", git: "https://github.com/ivan/repo.git")
