@@ -1,6 +1,6 @@
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\lab_work_2\base_student.rb'
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\lab_work_2\student.rb'
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\lab_work_2\student_short.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\base_student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\student_short.rb'
 
 def write_to_txt(file_path, file_name, students)
     raise ArgumentError, "Некорректный адрес файла: #{file_path}" unless File.exist?(File.dirname(file_path))

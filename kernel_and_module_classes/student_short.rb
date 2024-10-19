@@ -1,4 +1,4 @@
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\lab_work_2\base_student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\base_student.rb'
 
 class Student_short < BaseStudent
   def initialize(student, contact: nil)
