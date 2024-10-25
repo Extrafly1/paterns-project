@@ -42,8 +42,8 @@ student2 = Student.new(
   patronymic: 'Иванович',
   id: "2",
   phone: '+79162345678',
-  telegram: '@sidarov'
-  #git: 'https://github.com/Bagdad1970'
+  telegram: '@sidarov',
+  git: "https://github.com/Bagdad1970/repo.git"
 )
 
 student3 = Student.new(
@@ -70,15 +70,15 @@ puts "Студент 3 валиден? #{student3.validate?}"
 
 # Создаем несколько студентов
 students = [
-  Student.parse('ID: 1, Фамилия: Иванов, Имя: Иван, Отчество: Иванович, Телефон: +79162345678, Телеграм: @ivanov, Почта: ivanov@gmail.com, Гит: git@ivanov.ru'),
-  Student.parse('ID: 2, Фамилия: Петров, Имя: Петя, Отчество: Петрович, Телефон: +98765432101, Телеграм: @petrov, Почта: petrov@gmail.com, Гит: git@petrov.ru'),
+  Student.parse('ID: 1, Фамилия: Иванов, Имя: Иван, Отчество: Иванович, Телефон: +79162345678, Телеграм: @ivanov, Почта: ivanov@gmail.com, Гит: https://github.com/Bagdad19/repo.git'),
+  Student.parse('ID: 2, Фамилия: Петров, Имя: Петя, Отчество: Петрович, Телефон: +98765432101, Телеграм: @petrov, Почта: petrov@gmail.com, Гит: https://github.com/Bagdad1/repo.git'),
 ]
 
 # Записываем студентов в файл
-write_to_txt('C:\abc\кубгу\3 курс\патерны проектирования\lab_work_2', 'data', students)
+write_to_txt('C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes', 'data', students)
 
 # Чтение студентов из файла и вывод информации о них
-read_from_txt('C:\abc\кубгу\3 курс\патерны проектирования\lab_work_2\data.txt').each do |student|
+read_from_txt('C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\data.txt').each do |student|
   puts student.get_info
 end
 

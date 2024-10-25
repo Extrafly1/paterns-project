@@ -13,6 +13,12 @@ class Student < BaseStudent
     set_contacts(phone: phone, telegram: telegram, email: email)
   end
 
+  def to_s
+    "ID: #{@id}, Фамилия: #{@surname}, Имя: #{@name}, Отчество: #{@patronymic}, " \
+    "Телефон: #{@phone}, Телеграм: #{@telegram}, Почта: #{@email}, Гит: #{@git}"
+  end
+  
+
   def get_contacts()
     contact_info = ''
   
@@ -88,5 +94,71 @@ class Student < BaseStudent
 
   def get_info()
     "ID: #{@id}, ФИО: #{@surname} #{@name[0]}.#{@patronymic ? " #{@patronymic[0]}." : ''} Git: #{@git ? @git : 'нет'} Тел: #{@phone ? @phone : 'нет'} Телеграм: #{@telegram ? @telegram : 'нет'} Почта: #{@email ? @email : 'нет'} " \
+  end
+
+  protected # кастуем щиты от чужих
+  
+  def self.validate_fio(name)
+    name.match?(/^[a-zA-Zа-яА-Я\s]+$/)
+  end
+
+  def self.validate_phone(phone)
+    phone.match?(/\A(\+\d{1,3}\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\z/)
+  end
+
+  def self.validate_email(email)
+    email.match?(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i)
+  end
+
+  def self.validate_telegram(telegram)
+    telegram.match?(/\A@[a-zA-Z0-9_]+\z/)
+  end
+
+  def phone=(phone)
+    if self.class.validate_phone(phone)
+      @phone = phone
+    else
+      raise ArgumentError, "Неправильно введен телефон"
+    end
+  end
+
+  def email=(email)
+    if self.class.validate_email(email)
+      @email = email
+    else
+      raise ArgumentError, "Неправильно введен email"
+    end
+  end
+
+  def telegram=(telegram)
+    if self.class.validate_telegram(telegram)
+      @telegram = telegram
+    else
+      raise ArgumentError, "Неправильно введен телеграм"
+    end
+  end
+
+  def name=(name)
+    if self.class.validate_fio(name)
+      @name = name
+    else
+      raise ArgumentError, "Неправильно введено имя"
+    end
+  end
+
+  def surname=(surname) 
+    if self.class.validate_fio(surname)
+      @surname = surname
+    else
+      raise ArgumentError, "Неправильно введена фамилия"
+    end
+  end
+
+  def patronymic=(patronymic)
+    if self.class.validate_fio(patronymic)
+      @patronymic = patronymic
+    else
+      raise ArgumentError, "Неправильно введено отчество"
+    end
   end
 end
