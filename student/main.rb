@@ -2,6 +2,7 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\student.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\student_short.rb'
 
+# запись массива студентов в файл
 def write_to_txt(file_path, file_name, students)
     raise ArgumentError, "Некорректный адрес файла: #{file_path}" unless File.exist?(File.dirname(file_path))
   
@@ -15,6 +16,7 @@ def write_to_txt(file_path, file_name, students)
     puts "Данные успешно записаны в файл: #{file_path}/#{file_name}"
 end 
 
+# чтение массива студентов из файла
 def self.read_from_txt(file_path)
     raise ArgumentError, "Некорректный адрес файла: #{file_path}" unless File.exist?(file_path)
   
