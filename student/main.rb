@@ -1,6 +1,6 @@
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\base_student.rb'
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\student.rb'
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\student_short.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\base_student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_short.rb'
 
 def write_to_txt(file_path, file_name, students)
     raise ArgumentError, "Некорректный адрес файла: #{file_path}" unless File.exist?(File.dirname(file_path))
@@ -11,8 +11,6 @@ def write_to_txt(file_path, file_name, students)
         file.puts student.to_s
       end
     end
-  
-    puts "Данные успешно записаны в файл: #{file_path}/#{file_name}"
 end 
 
 def self.read_from_txt(file_path)
@@ -21,7 +19,7 @@ def self.read_from_txt(file_path)
     students = []
     File.open(file_path, 'r') do |file|
       file.each_line do |line|
-        students << Student.parse(line.strip)
+        students << Student.initialize_from_string(line.strip)
       end
     end
   
@@ -70,23 +68,29 @@ puts "Студент 3 валиден? #{student3.validate?}"
 
 # Создаем несколько студентов
 students = [
-  Student.parse('ID: 1, Фамилия: Иванов, Имя: Иван, Отчество: Иванович, Телефон: +79162345678, Телеграм: @ivanov, Почта: ivanov@gmail.com, Гит: https://github.com/Bagdad19/repo.git'),
-  Student.parse('ID: 2, Фамилия: Петров, Имя: Петя, Отчество: Петрович, Телефон: +98765432101, Телеграм: @petrov, Почта: petrov@gmail.com, Гит: https://github.com/Bagdad1/repo.git'),
+  Student.initialize_from_string('ID: 1, Фамилия: Иванов, Имя: Иван, Отчество: Иванович, Телефон: +79162345678, Телеграм: @ivanov, Почта: ivanov@gmail.com, Гит: https://github.com/Bagdad19/repo.git'),
+  Student.initialize_from_string('ID: 2, Фамилия: Петров, Имя: Петя, Отчество: Петрович, Телефон: +98765432101, Телеграм: @petrov, Почта: petrov@gmail.com, Гит: https://github.com/Bagdad1/repo.git'),
 ]
 
 # Записываем студентов в файл
-write_to_txt('C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes', 'data', students)
+write_to_txt('C:\abc\кубгу\3 курс\патерны проектирования\student', 'data', students)
 
 # Чтение студентов из файла и вывод информации о них
-read_from_txt('C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\data.txt').each do |student|
+read_from_txt('C:\abc\кубгу\3 курс\патерны проектирования\student\data.txt').each do |student|
   puts student.get_info
 end
 
 # Создаем экземпляры Student_short
-student1_short = Student_short.new(students[0])
-student2_short = Student_short.new(students[1])
+student1_short = Student_short.initialize_from_student(students[0])
+student2_short = Student_short.initialize_from_student(students[1])
 
 # Выводим информацию о студентах
 puts student1_short.to_s
 puts student2_short.to_s
+puts "\n"
 
+student3_short = Student_short.initialize_from_string(students[0].get_info)
+
+puts students[0].get_info
+puts student3_short.to_s
+puts "Короткий студент валиден? #{student3_short.validate?}"

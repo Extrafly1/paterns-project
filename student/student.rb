@@ -1,4 +1,4 @@
-require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\kernel_and_module_classes\base_student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\base_student.rb'
 
 class Student < BaseStudent
   attr_reader :surname, :name, :patronymic
@@ -13,32 +13,7 @@ class Student < BaseStudent
     set_contacts(phone: phone, telegram: telegram, email: email)
   end
 
-  def to_s
-    "ID: #{@id}, Фамилия: #{@surname}, Имя: #{@name}, Отчество: #{@patronymic}, " \
-    "Телефон: #{@phone}, Телеграм: #{@telegram}, Почта: #{@email}, Гит: #{@git}"
-  end
-  
-
-  def get_contacts()
-    contact_info = ''
-  
-    if !@phone.nil?
-      contact_info += "Телефон: #{@phone} "
-    end
-    
-    if !@telegram.nil?
-      contact_info += "Телеграм: #{@telegram} "
-    end
-    
-    if !@email.nil?
-      contact_info += "Почта: #{@email} "
-    end
-  
-    contact_info
-  end
-  
-
-  def self.parse(string)
+  def self.initialize_from_string(string)
     attributes = {}
 
     string.split(', ').each do |pair|
@@ -57,13 +32,25 @@ class Student < BaseStudent
       git: attributes['Гит']
     )
   end
+
+  def to_s
+    "ID: #{@id}, Фамилия: #{@surname}, Имя: #{@name}, Отчество: #{@patronymic}, " \
+    "Телефон: #{@phone}, Телеграм: #{@telegram}, Почта: #{@email}, Гит: #{@git}"
+  end
   
-  def has_git?()
-    if self.git == nil
-      false
-    else
-      true
+
+  def get_contact()
+    contact_info = ''
+  
+    if !@phone.nil?
+      contact_info = "Телефон: #{@phone} "
+    elsif !@telegram.nil?
+      contact_info = "Телеграм: #{@telegram} "
+    elsif !@email.nil?
+      contact_info = "Почта: #{@email} "
     end
+  
+    contact_info
   end
 
   def has_contact?()
@@ -88,15 +75,9 @@ class Student < BaseStudent
     end
   end
 
-  def validate?()
-    has_contact?() && has_git?()
-  end
-
   def get_info()
-    "ID: #{@id}, ФИО: #{@surname} #{@name[0]}.#{@patronymic ? " #{@patronymic[0]}." : ''} Git: #{@git ? @git : 'нет'} Тел: #{@phone ? @phone : 'нет'} Телеграм: #{@telegram ? @telegram : 'нет'} Почта: #{@email ? @email : 'нет'} " \
+    "ID: #{@id}, ФИО: #{@surname} #{@name[0]}.#{@patronymic ? " #{@patronymic[0]}." : ''}, Git: #{@git ? @git : ''}, Тел: #{@phone ? @phone : ''}, Телеграм: #{@telegram ? @telegram : ''}, Почта: #{@email ? @email : ''} " \
   end
-
-  protected # кастуем щиты от чужих
   
   def self.validate_fio(name)
     name.match?(/^[a-zA-Zа-яА-Я\s]+$/)
@@ -113,31 +94,7 @@ class Student < BaseStudent
   def self.validate_telegram(telegram)
     telegram.match?(/\A@[a-zA-Z0-9_]+\z/)
   end
-
-  def phone=(phone)
-    if self.class.validate_phone(phone)
-      @phone = phone
-    else
-      raise ArgumentError, "Неправильно введен телефон"
-    end
-  end
-
-  def email=(email)
-    if self.class.validate_email(email)
-      @email = email
-    else
-      raise ArgumentError, "Неправильно введен email"
-    end
-  end
-
-  def telegram=(telegram)
-    if self.class.validate_telegram(telegram)
-      @telegram = telegram
-    else
-      raise ArgumentError, "Неправильно введен телеграм"
-    end
-  end
-
+  
   def name=(name)
     if self.class.validate_fio(name)
       @name = name
@@ -159,6 +116,31 @@ class Student < BaseStudent
       @patronymic = patronymic
     else
       raise ArgumentError, "Неправильно введено отчество"
+    end
+  end
+
+  protected # кастуем щиты от чужих
+  def phone=(phone)
+    if self.class.validate_phone(phone)
+      @phone = phone
+    else
+      raise ArgumentError, "Неправильно введен телефон"
+    end
+  end
+
+  def email=(email)
+    if self.class.validate_email(email)
+      @email = email
+    else
+      raise ArgumentError, "Неправильно введен email"
+    end
+  end
+
+  def telegram=(telegram)
+    if self.class.validate_telegram(telegram)
+      @telegram = telegram
+    else
+      raise ArgumentError, "Неправильно введен телеграм"
     end
   end
 end

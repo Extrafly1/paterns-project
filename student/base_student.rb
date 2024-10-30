@@ -5,9 +5,6 @@ class BaseStudent
     self.id = id
     self.git = git if !git.nil?
   end
-
-  protected # кастуем щиты от чужих
-
   # validators for setters
   def self.validate_git(git)
     git.match?(/\Ahttps:\/\/github\.com\/[-a-zA-Z0-9@:%_\+.~#=]+\/[-a-zA-Z0-9._~%]+\.git\z/)
@@ -26,6 +23,23 @@ class BaseStudent
     end
   end
 
+  def validate?()
+    has_contact?() && has_git?()
+  end
+
+  # def has_contact?() # на тот случай если проверяется базовый студент
+  #   true
+  # end
+
+  def has_git?()
+    if self.git == nil
+      false
+    else
+      true
+    end
+  end
+
+  protected # кастуем щиты от чужих
   def git=(git)
     if BaseStudent.validate_git(git)
       @git = git
@@ -34,4 +48,3 @@ class BaseStudent
     end
   end
 end
-  
