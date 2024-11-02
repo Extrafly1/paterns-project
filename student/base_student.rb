@@ -22,7 +22,11 @@ class BaseStudent
       raise ArgumentError, "Неправильно введен id"
     end
   end
-
+  
+  def validate?()
+    has_contact?() && has_git?()
+  end
+  
   # def has_contact?() # на тот случай если проверяется базовый студент
   #   true
   # end
@@ -42,9 +46,5 @@ class BaseStudent
     else
       raise ArgumentError, "Неправильно введен git"
     end
-  end
-
-  def validate?()
-    has_contact?() && has_git?()
   end
 end
