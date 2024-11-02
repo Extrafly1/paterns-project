@@ -3,12 +3,6 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 class Student_short < BaseStudent
   attr_reader :surname_initials, :contact
 
-  def initialize(id:, git:, surname_initials:, contact: nil)
-    super(id: id, git: git)
-    self.surname_initials = surname_initials
-    @contact = contact
-  end
-
   def self.initialize_from_student(student)
     new(
       id: student.id, 
@@ -54,5 +48,13 @@ class Student_short < BaseStudent
     else
       raise ArgumentError, "Неправильно введено ФИО"
     end
+  end
+
+  private
+  
+  def initialize(id:, git:, surname_initials:, contact: nil)
+    super(id: id, git: git)
+    self.surname_initials = surname_initials
+    @contact = contact
   end
 end
