@@ -20,3 +20,11 @@ def find_positive_divisors(array)
   divisors.uniq
 end
 
+# Задача 5: Построить новый список из квадратов неотрицательных чисел, меньших 100 и встречающихся более 2 раз
+def find_squares_of_repeated(array)
+  array.select { |number| number >= 0 && number < 100 }
+       .group_by { |number| number }
+       .select { |_, occurrences| occurrences.size > 2 }
+       .keys
+       .map { |number| number**2 }
+end
