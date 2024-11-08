@@ -3,4 +3,10 @@ def find_unique_element(array)
   array.find { |element| array.count(element) == 1 }
 end
 
+# Задача 2: Найти два наименьших элемента
+def find_two_smallest_elements(array)
+  sorted_unique = array.uniq.sort
+  sorted_unique[0..1]
+end
+
 
