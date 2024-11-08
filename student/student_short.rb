@@ -3,13 +3,7 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 class Student_short < BaseStudent
   attr_reader :surname_initials, :contact
 
-  def initialize(id:, git:, surname_initials:, contact: nil)
-    super(id: id, git: git)
-    self.surname_initials = surname_initials
-    @contact = contact
-  end
-
-  def self.initialize_from_student(student)
+  def self.create_from_student(student)
     new(
       id: student.id, 
       git: student.git, 
@@ -18,7 +12,7 @@ class Student_short < BaseStudent
     )
   end
 
-  def self.initialize_from_string(string)
+  def self.create_from_string(string)
     attributes = {}
 
     string.split(', ').each do |pair|
@@ -54,5 +48,13 @@ class Student_short < BaseStudent
     else
       raise ArgumentError, "Неправильно введено ФИО"
     end
+  end
+
+  private
+  
+  def initialize(id:, git:, surname_initials:, contact: nil)
+    super(id: id, git: git)
+    self.surname_initials = surname_initials
+    @contact = contact
   end
 end

@@ -13,7 +13,7 @@ class Student < BaseStudent
     set_contacts(phone: phone, telegram: telegram, email: email)
   end
 
-  def self.initialize_from_string(string)
+  def self.create_from_string(string)
     attributes = {}
 
     string.split(', ').each do |pair|

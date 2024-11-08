@@ -21,7 +21,7 @@ def self.read_from_txt(file_path)
     students = []
     File.open(file_path, 'r') do |file|
       file.each_line do |line|
-        students << Student.initialize_from_string(line.strip)
+        students << Student.create_from_string(line.strip)
       end
     end
   
@@ -70,8 +70,8 @@ puts "Студент 3 валиден? #{student3.validate?}"
 
 # Создаем несколько студентов
 students = [
-  Student.initialize_from_string('ID: 1, Фамилия: Иванов, Имя: Иван, Отчество: Иванович, Телефон: +79162345678, Телеграм: @ivanov, Почта: ivanov@gmail.com, Гит: https://github.com/Bagdad19/repo.git'),
-  Student.initialize_from_string('ID: 2, Фамилия: Петров, Имя: Петя, Отчество: Петрович, Телефон: +98765432101, Телеграм: @petrov, Почта: petrov@gmail.com, Гит: https://github.com/Bagdad1/repo.git'),
+  Student.create_from_string('ID: 1, Фамилия: Иванов, Имя: Иван, Отчество: Иванович, Телефон: +79162345678, Телеграм: @ivanov, Почта: ivanov@gmail.com, Гит: https://github.com/Bagdad19/repo.git'),
+  Student.create_from_string('ID: 2, Фамилия: Петров, Имя: Петя, Отчество: Петрович, Телефон: +98765432101, Телеграм: @petrov, Почта: petrov@gmail.com, Гит: https://github.com/Bagdad1/repo.git'),
 ]
 
 # Записываем студентов в файл
@@ -83,15 +83,15 @@ read_from_txt('C:\abc\кубгу\3 курс\патерны проектиров�
 end
 
 # Создаем экземпляры Student_short
-student1_short = Student_short.initialize_from_student(students[0])
-student2_short = Student_short.initialize_from_student(students[1])
+student1_short = Student_short.create_from_student(students[0])
+student2_short = Student_short.create_from_student(students[1])
 
 # Выводим информацию о студентах
 puts student1_short.to_s
 puts student2_short.to_s
 puts "\n"
 
-student3_short = Student_short.initialize_from_string(students[0].get_info)
+student3_short = Student_short.create_from_string(students[0].get_info)
 
 puts students[0].get_info
 puts student3_short.to_s
