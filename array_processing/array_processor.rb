@@ -22,6 +22,17 @@ class ArrayProcessor
     min_element
   end
 
+  # Метод для агрегации значений
+  def inject(initial = nil, &block)
+    accumulator = initial || @array[0]
+    start_index = initial.nil? ? 1 : 0
+
+    @array[start_index..-1].each do |element|
+      accumulator = block.call(accumulator, element)
+    end
+    accumulator
+  end
+
   # Метод для получения массива
   def to_a
     @array
@@ -33,4 +44,4 @@ processor = ArrayProcessor.new([1, 2, 3, 4, 5])
 # Пример использования методов
 puts processor.find { |x| x > 3 }            # Output: 4
 puts processor.min_by { |x| -x }              # Output: 5
-
+puts processor.inject(0) { |sum, x| sum + x } # Output: 15
