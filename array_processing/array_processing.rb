@@ -9,4 +9,9 @@ def find_two_smallest_elements(array)
   sorted_unique[0..1]
 end
 
+# Задача 3: Найти элемент, наиболее близкий к заданному числу
+def find_closest_element(array, target)
+  array.min_by { |element| (element - target).abs }
+end
+
 
