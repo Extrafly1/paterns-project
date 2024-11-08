@@ -51,7 +51,15 @@ class ArrayProcessor
     end
     result
   end
-  
+
+  # Метод для проверки, все ли элементы соответствуют условию
+  def all?(&block)
+    @array.each do |element|
+      return false unless block.call(element)
+    end
+    true
+  end
+
   # Метод для получения массива
   def to_a
     @array
@@ -66,3 +74,4 @@ puts processor.min_by { |x| -x }              # Output: 5
 puts processor.inject(0) { |sum, x| sum + x } # Output: 15
 puts processor.one? { |x| x == 3 }             # Output: true
 puts processor.flat_map { |x| [x, x * 2] }     # Output: [1, 2, 2, 4, 3, 6, 4, 8, 5, 10]
+puts processor.all? { |x| x < 6 }              # Output: true
