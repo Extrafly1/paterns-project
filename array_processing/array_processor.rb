@@ -33,6 +33,16 @@ class ArrayProcessor
     accumulator
   end
 
+  # Метод для проверки, есть ли ровно один элемент, соответствующий условию
+  def one?(&block)
+    count = 0
+    @array.each do |element|
+      count += 1 if block.call(element)
+      return false if count > 1
+    end
+    count == 1
+  end
+
   # Метод для получения массива
   def to_a
     @array
@@ -45,3 +55,4 @@ processor = ArrayProcessor.new([1, 2, 3, 4, 5])
 puts processor.find { |x| x > 3 }            # Output: 4
 puts processor.min_by { |x| -x }              # Output: 5
 puts processor.inject(0) { |sum, x| sum + x } # Output: 15
+puts processor.one? { |x| x == 3 }             # Output: true
