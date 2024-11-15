@@ -50,7 +50,7 @@ class Student_short < BaseStudent
     end
   end
 
-  private
+  private_class_method :new
   
   def initialize(id:, git:, surname_initials:, contact: nil)
     super(id: id, git: git)

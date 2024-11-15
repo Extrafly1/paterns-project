@@ -27,9 +27,9 @@ class BaseStudent
     has_contact?() && has_git?()
   end
   
-  # def has_contact?() # на тот случай если проверяется базовый студент
-  #   true
-  # end
+  def has_contact?()
+    raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+  end
 
   def has_git?()
     if self.git == nil
