@@ -1,18 +1,25 @@
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\base_student.rb'
+require 'date'
 
 class Student < BaseStudent
-  attr_reader :surname, :name, :patronymic
+  attr_reader :surname, :name, :patronymic, :birth_date
 
-  def initialize(surname:, name:, patronymic:, id: nil, phone: nil, email: nil, git: nil, telegram: nil)
+  def initialize(surname:, name:, patronymic:, birth_date:, id: nil, phone: nil, email: nil, git: nil, telegram: nil)
     super(id: id, git: git)
 
     self.surname = surname
     self.name = name
     self.patronymic = patronymic
+    self.birth_date = birth_date
 
     set_contacts(phone: phone, telegram: telegram, email: email)
   end
 
+  def birth_date=(birth_date)
+    @birth_date = Date.parse(birth_date) rescue raise(ArgumentError, "Неправильный формат даты рождения")
+  end
+
+  
   def self.create_from_string(string)
     attributes = {}
 
@@ -26,6 +33,7 @@ class Student < BaseStudent
       surname: attributes['Фамилия'],
       name: attributes['Имя'],
       patronymic: attributes['Отчество'],
+      birth_date: attributes['Дата рождения'],
       phone: attributes['Телефон'],
       telegram: attributes['Телеграм'],
       email: attributes['Почта'],
@@ -35,7 +43,7 @@ class Student < BaseStudent
 
   def to_s
     "ID: #{@id}, Фамилия: #{@surname}, Имя: #{@name}, Отчество: #{@patronymic}, " \
-    "Телефон: #{@phone}, Телеграм: #{@telegram}, Почта: #{@email}, Гит: #{@git}"
+    "Дата рождения: #{@birth_date}, Телефон: #{@phone}, Телеграм: #{@telegram}, Почта: #{@email}, Гит: #{@git}"
   end
   
 
