@@ -2,6 +2,7 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_short.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\StudentTree.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_list_student_short.rb'
 
 # запись массива студентов в файл
 def write_to_txt(file_path, file_name, students)

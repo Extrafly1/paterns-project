@@ -32,6 +32,10 @@ class Student_short < BaseStudent
     "ID: #{@id}, ФИО: #{@surname_initials} Git: #{@git ? @git : 'нет'} Контакт: #{@contact ? @contact : 'нет'} "
   end
 
+  def to_h
+    { id: @id, surname_initials: @surname_initials, git: @git, contact: @contact }
+  end
+  
   def has_contact?()
     if self.contact == nil
       false
