@@ -132,3 +132,19 @@ puts "\n"
 # Преобразовать в массив фамилий студентов
 surnames = tree.map(&:surname)
 puts surnames.inspect
+
+# =======
+students = [
+  Student_short.create_from_student(student4),
+  Student_short.create_from_student(student5),
+  Student_short.create_from_student(student6)
+]
+
+list = DataListStudentShort.new(students)
+puts "Attributes: #{list.get_names}"
+
+data_table = list.get_data
+puts "Row count: #{data_table.row_count}"
+puts "Column count: #{data_table.column_count}"
+
+puts "First row, second column: #{data_table.get_element(0, 1)}"
