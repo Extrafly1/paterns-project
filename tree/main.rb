@@ -14,3 +14,23 @@ tree.each { |tag| puts tag.name }
 
 puts "Elements in Breadth First:"
 tree.breadth_first_each { |tag| puts tag.name }
+
+# Пример использования метода `map` для получения имен всех тегов
+tag_names = tree.map { |tag| tag.name }
+puts "All tag names: #{tag_names.join(', ')}"
+
+# Пример использования метода `select` для выбора тегов с определенным именем
+h1_tags = tree.select { |tag| tag.name == 'h1' }
+puts "H1 tags: #{h1_tags.map(&:to_s)}"
+
+# Пример использования метода `find` для нахождения первого тега с определенным именем
+first_div = tree.find { |tag| tag.name == 'div' }
+puts "First div tag: #{first_div}" if first_div
+
+# Пример использования метода `count` для подсчета всех тегов
+total_tags = tree.count
+puts "Total number of tags: #{total_tags}"
+
+# Пример использования метода `reject` для исключения тегов с определенным именем
+non_paragraph_tags = tree.reject { |tag| tag.name == 'p' }
+puts "Tags excluding paragraphs: #{non_paragraph_tags.map(&:to_s)}"
