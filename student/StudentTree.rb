@@ -28,7 +28,7 @@ class StudentTree
   def add_recursive(node, student)
     return Node.new(student) if node.nil?
 
-    if student.birth_date < node.student.birth_date
+    if student < node.student
       node.left = add_recursive(node.left, student)
     else
       node.right = add_recursive(node.right, student)

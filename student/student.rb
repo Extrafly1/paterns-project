@@ -2,6 +2,7 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 require 'date'
 
 class Student < BaseStudent
+  include Comparable
   attr_reader :surname, :name, :patronymic, :birth_date
 
   def initialize(surname:, name:, patronymic:, birth_date:, id: nil, phone: nil, email: nil, git: nil, telegram: nil)
@@ -18,7 +19,10 @@ class Student < BaseStudent
   def birth_date=(birth_date)
     @birth_date = Date.parse(birth_date) rescue raise(ArgumentError, "Неправильный формат даты рождения")
   end
-
+  
+  def <=>(other)
+    birth_date <=> other.birth_date
+  end
   
   def self.create_from_string(string)
     attributes = {}
