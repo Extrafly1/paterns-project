@@ -34,3 +34,24 @@ puts "Total number of tags: #{total_tags}"
 # Пример использования метода `reject` для исключения тегов с определенным именем
 non_paragraph_tags = tree.reject { |tag| tag.name == 'p' }
 puts "Tags excluding paragraphs: #{non_paragraph_tags.map(&:to_s)}"
+
+# Output:
+# HTML Tree Structure:
+# <root><div class="container"><h1></h1><p></p></div></root>
+# Text Content:
+
+# Elements in Depth First:
+# root
+# div
+# h1
+# p
+# Elements in Breadth First:
+# root
+# div
+# h1
+# p
+# All tag names: root, div, h1, p
+# H1 tags: ["<h1></h1>"]
+# First div tag: <div class="container"><h1></h1><p></p></div>
+# Total number of tags: 4
+# Tags excluding paragraphs: ["<root><div class=\"container\"><h1></h1><p></p></div></root>", "<div class=\"container\"><h1></h1><p></p></div>", "<h1></h1>"]
