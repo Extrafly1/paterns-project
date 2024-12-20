@@ -150,3 +150,14 @@ puts "Row count: #{data_table.row_count}"
 puts "Column count: #{data_table.column_count}"
 
 puts "First row, second column: #{data_table.get_element(0, 1)}"
+
+json_path = 'C:\abc\кубгу\3 курс\патерны проектирования\student\students.json'
+yaml_path = 'C:\abc\кубгу\3 курс\патерны проектирования\student\students.yaml'
+
+json_list = StudentsListJSON.new(json_path)
+json_list.read_all
+puts "JSON Students: #{json_list.get_student_count}"
+
+yaml_list = StudentsListYAML.new(yaml_path)
+yaml_list.read_all
+puts "YAML Students: #{yaml_list.get_student_count}"
