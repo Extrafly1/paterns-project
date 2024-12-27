@@ -13,10 +13,20 @@ class DataList
   end
 
   def get_names
-    raise "get_names must be implemented in subclasses"
+    name = column_names
+    name
   end
 
   def get_data
-    raise "get_data must be implemented in subclasses"
+    data = column_types
+    data
+  end
+
+  def column_names
+    raise "column_names must be implemented in subclasses"
+  end
+
+  def column_types
+    raise "column_types must be implemented in subclasses"
   end
 end

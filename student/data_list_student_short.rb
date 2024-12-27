@@ -12,19 +12,19 @@ class DataListStudentShort < DataList
     object.to_h.reject { |key, _| key == :id }
   end
 
-  public
-
-  def get_names
+  def column_names
     return [] if @objects.empty?
 
-    extract_attributes(@objects.first).keys
+    object = extract_attributes(@objects.first).keys
+    object
   end
 
-  def get_data
+  def column_types
     rows = @objects.map.with_index do |object, index|
       [generate_row_number(index)] + extract_attributes(object).values
     end
 
-    DataTable.new(rows)
+    object = DataTable.new(rows)
+    object
   end
 end
