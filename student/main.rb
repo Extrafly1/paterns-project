@@ -5,6 +5,10 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_list_student_short.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_json.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_yaml.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\file_strategy.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\json_strategy.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\yaml_strategy.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\students_file_handler.rb'
 
 # запись массива студентов в файл
 def write_to_txt(file_path, file_name, students)
@@ -161,3 +165,20 @@ puts "JSON Students: #{json_list.get_student_count}"
 yaml_list = StudentsListYAML.new(yaml_path)
 yaml_list.read_all
 puts "YAML Students: #{yaml_list.get_student_count}"
+
+# Использование JSON
+json_strategy = JSONStrategy.new
+json_handler = StudentsFileHandler.new(json_strategy)
+json_students = json_handler.read('C:\abc\кубгу\3 курс\патерны проектирования\student\students.json')
+puts "JSON Students: #{json_students}"
+
+# Использование YAML
+yaml_strategy = YAMLStrategy.new
+yaml_handler = StudentsFileHandler.new(yaml_strategy)
+yaml_students = yaml_handler.read('C:\abc\кубгу\3 курс\патерны проектирования\student\students.yaml')
+puts "YAML Students: #{yaml_students}"
+
+# Запись данных
+new_students = [{ id: 1, surname_initials: 'Ivanov I.I.', git: 'ivanov_git' }]
+json_handler.write('students_new.json', new_students)
+yaml_handler.write('students_new.yaml', new_students)
