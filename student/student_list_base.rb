@@ -1,7 +1,6 @@
 require 'json'
 require 'yaml'
 
-# Базовый класс
 class StudentsListBase
   attr_reader :file_path
 
@@ -64,7 +63,6 @@ class StudentsListBase
     @students.size
   end
 
-  # Абстрактные методы, которые нужно переопределить в подклассах
   def parse_file
     raise NotImplementedError, 'Метод parse_file должен быть реализован в подклассе'
   end
