@@ -3,7 +3,7 @@ require 'date'
 
 class Student < BaseStudent
   include Comparable
-  attr_reader :surname, :name, :patronymic, :birth_date
+  attr_reader :surname, :name, :patronymic, :birth_date, :phone, :email, :telegram, :git
 
   def initialize(surname:, name:, patronymic:, birth_date:, id: nil, phone: nil, email: nil, git: nil, telegram: nil)
     super(id: id, git: git)

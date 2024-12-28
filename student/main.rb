@@ -5,10 +5,12 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_list_student_short.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_json.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_yaml.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_base.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\file_strategy.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\json_strategy.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\yaml_strategy.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\students_file_handler.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\StudentListStrategy.rb'
 
 # запись массива студентов в файл
 def write_to_txt(file_path, file_name, students)
@@ -158,14 +160,17 @@ puts "First row, second column: #{data_table.get_element(0, 1)}"
 json_path = 'C:\abc\кубгу\3 курс\патерны проектирования\student\students.json'
 yaml_path = 'C:\abc\кубгу\3 курс\патерны проектирования\student\students.yaml'
 
-json_list = StudentsListJSON.new(json_path)
+json_strategy = StudentsListJSON.new
+yaml_strategy = StudentsListYAML.new
+
+json_list = StudentsListBase.new('C:\abc\кубгу\3 курс\патерны проектирования\student\students.json', json_strategy)
+yaml_list = StudentsListBase.new('C:\abc\кубгу\3 курс\патерны проектирования\student\students.yaml', yaml_strategy)
+
 json_list.read_all
-puts "JSON Students: #{json_list.get_student_count}"
-
-yaml_list = StudentsListYAML.new(yaml_path)
 yaml_list.read_all
-puts "YAML Students: #{yaml_list.get_student_count}"
 
+json_list.write_all
+yaml_list.write_all
 # Использование JSON
 json_strategy = JSONStrategy.new
 json_handler = StudentsFileHandler.new(json_strategy)

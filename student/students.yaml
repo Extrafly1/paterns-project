@@ -1,8 +1,9 @@
-- id: 1
-  git: "https://github.com/johndoe"
-  surname_initials: "Doe J."
-  contact: "john.doe@example.com"
-- id: 2
-  git: "https://github.com/janesmith"
-  surname_initials: "Smith J."
-  contact: "jane.smith@example.com"
+---
+- :id: 1
+  :git: https://github.com/johndoe
+  :surname_initials: Doe J.
+  :contact: john.doe@example.com
+- :id: 2
+  :git: https://github.com/janesmith
+  :surname_initials: Smith J.
+  :contact: jane.smith@example.com

@@ -1,20 +1,24 @@
 require 'json'
 require 'yaml'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\StudentListStrategy.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_json.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_yaml.rb'
 
 class StudentsListBase
-  attr_reader :file_path
+  attr_reader :file_path, :strategy
 
-  def initialize(file_path)
+  def initialize(file_path, strategy)
     @file_path = file_path
+    @strategy = strategy
     @students = []
   end
 
   def read_all
-    @students = parse_file || []
+    @students = @strategy.parse_file(file_path) || []
   end
 
   def write_all
-    save_to_file(@students)
+    @strategy.save_to_file(file_path, @students)
   end
 
   def get_student_by_id(id)
