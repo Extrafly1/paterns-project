@@ -13,20 +13,27 @@ class DataList
   end
 
   def get_names
-    name = column_names
-    name
+    names
+  end
+
+  def names
+    raise "names must be implemented in subclasses"
   end
 
   def get_data
-    data = column_types
-    data
+    rows = @objects.map.with_index do |object, index|
+      [generate_row_number(index)] + extract_attributes(object).values
+    end
+
+    object = DataTable.new(rows)
+    object
   end
 
-  def column_names
-    raise "column_names must be implemented in subclasses"
+  def generate_row_number(index)
+    raise "generate_row_number must be implemented in subclasses"
   end
 
-  def column_types
-    raise "column_types must be implemented in subclasses"
+  def extract_attributes(object)
+    raise "extract_attributes must be implemented in subclasses"
   end
 end
