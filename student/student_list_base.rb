@@ -66,12 +66,4 @@ class StudentsListBase
   def get_student_count
     @students.size
   end
-
-  def parse_file
-    raise NotImplementedError, 'Метод parse_file должен быть реализован в подклассе'
-  end
-
-  def save_to_file(_data)
-    raise NotImplementedError, 'Метод save_to_file должен быть реализован в подклассе'
-  end
 end

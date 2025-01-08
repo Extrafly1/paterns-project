@@ -187,3 +187,56 @@ puts "YAML Students: #{yaml_students}"
 new_students = [{ id: 1, surname_initials: 'Ivanov I.I.', git: 'ivanov_git' }]
 json_handler.write('students_new.json', new_students)
 yaml_handler.write('students_new.yaml', new_students)
+
+
+
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\DatabaseConnection.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\StudentsListDB.rb'
+# Создаём подключение к базе данных
+db_connection = DatabaseConnection.new
+
+# Создаём объект для работы со списком студентов в базе данных
+students_list_db = StudentsListDB.new(db_connection)
+
+# Добавляем нового студента
+new_student = Student.new(
+  id: '4',
+  surname: 'Тестов', 
+  name: 'Тест', 
+  patronymic: 'Тестович', 
+  birth_date: '1990-01-01', 
+  phone: '+98765432101', 
+  email: 'test@example.com', 
+  git: 'https://github.com/Bagdad1970/repo.git', 
+  telegram: '@test'
+)
+
+new_student_id = students_list_db.add_student(new_student)
+puts "Добавлен студент с ID: #{new_student_id}"
+
+# Получаем студента по ID
+# student = students_list_db.get_student_by_id(1)
+# puts "Получен студент: #{student}"
+
+# Обновляем информацию о студенте
+updated_student = Student.new(  
+  id: "21",
+  surname: 'Измен',
+  name: 'Измен',
+  patronymic: 'Измен',
+  birth_date: '1990-01-01',
+  phone: '+98765432101',
+  email: 'test@example.com',
+  git: 'https://github.com/Bagdad1970/repo.git',
+  telegram: '@test'
+)
+students_list_db.update_student(1, updated_student)
+puts "Студент обновлён: #{students_list_db.get_student_by_id(new_student_id)}"
+
+# Получаем количество студентов
+student_count = students_list_db.get_student_count
+puts "Количество студентов: #{student_count}"
+
+# Удаляем студента
+students_list_db.delete_student(new_student_id)
+puts "Студент с ID #{new_student_id} удалён"
