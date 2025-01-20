@@ -1,0 +1,176 @@
+@startuml
+class BaseStudent {
+  +{static} validate_git(git)
+  +{static} valid_id(id)
+  +id
+  +git
+  +initialize(id:, git: nil)
+  +id=(id)
+  +validate?()
+  +has_contact?()
+  +has_git?()
+  #git=(git)
+}
+
+class Student {
+  +{static} create_from_string(string)
+  +{static} validate_fio(name)
+  +{static} validate_phone(phone)
+  +{static} validate_email(email)
+  +{static} validate_telegram(telegram)
+  +surname
+  +name
+  +patronymic
+  +birth_date
+  +initialize(surname:, name:, patronymic:, birth_date:, id: nil, phone: nil, email: nil, git: nil, telegram: nil)
+  +birth_date=(birth_date)
+  +get_contact()
+  +has_contact?()
+  +set_contacts(phone: nil, telegram: nil, email: nil)
+  +get_info()
+  +name=(name)
+  +surname=(surname)
+  +patronymic=(patronymic)
+  #phone=(phone)
+  #email=(email)
+  #telegram=(telegram)
+}
+
+class Student_short {
+  +{static} create_from_student(student)
+  +def == (other)
+  +{static} create_from_string(string)
+  +surname_initials
+  +contact
+  +to_s()
+  +to_h()
+  +has_contact?()
+  +surname_initials=(value)
+  -initialize(id:, git:, surname_initials:, contact: nil)
+}
+
+class StudentTree {
+  +add(student)
+  +each(&block)
+  -add_recursive(node, student)
+  -traverse_in_order(node, &block)
+}
+
+class StudentsListBase {
+  +file_path
+  +initialize(file_path, strategy)
+  +read_all()
+  +write_all()
+  +get_student_by_id(id)
+  +get_k_n_student_short_list(k, n, data_list = nil)
+  +sort_by_name()
+  +add_student(student)
+  +update_student(id, updated_student)
+  +delete_student(id)
+  +get_student_count()
+  -parse_file(file_path)
+  -save_to_file(file_path, data)
+}
+
+class StudentListStrategy {
+  +parse_file(file_path)
+  +save_to_file(file_path, data)
+}
+
+class StudentsListJSON {
+  +parse_file(file_path)
+  +save_to_file(file_path, data)
+}
+
+class StudentsListYAML {
+  +parse_file(file_path)
+  +save_to_file(file_path, data)
+}
+
+class DataList {
+  +initialize(objects)
+  +select(number)
+  +get_selected()
+  +get_names()
+  +get_data()
+  #generate_row_number(index)
+  #extract_attributes(object)
+  #names()
+}
+
+class DataListStudentShort {
+  -generate_row_number(index)
+  -extract_attributes(object)
+  -names()
+}
+
+class DataTable {
+  +initialize(data)
+  +get_element(row, col)
+  +row_count()
+  +column_count()
+}
+
+class FileStrategy {
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class JSONStrategy {
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class YAMLStrategy {
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class StudentsFileHandler {
+  +strategy
+  +initialize(strategy)
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class DatabaseConnection {
+  +initialize()
+  +query(sql)
+  +execute(sql)
+}
+
+class StudentsListDB {
+  +initialize(db_connection)
+  +get_student_by_id(id)
+  +get_k_n_student_short_list(k, n)
+  +add_student(student)
+  +update_student(id, updated_student)
+  +delete_student(id)
+  +get_student_count()
+}
+
+BaseStudent <|-- Student
+BaseStudent <|-- Student_short
+StudentsListBase o-- StudentListStrategy
+StudentListStrategy <|-- StudentsListJSON
+StudentListStrategy <|-- StudentsListYAML
+FileStrategy <|-- JSONStrategy
+FileStrategy <|-- YAMLStrategy
+DataList <|-- DataListStudentShort
+
+StudentTree o-- Student
+StudentsListBase o-- Student_short
+DataList *-- DataTable
+StudentsFileHandler *-- FileStrategy
+
+StudentsListBase --> Student_short : uses
+StudentsListJSON --> DataListStudentShort : uses
+StudentsListYAML --> DataListStudentShort : uses
+StudentTree --> Student : manages
+StudentsFileHandler --> FileStrategy : strategy
+
+StudentsListDB --> DatabaseConnection : uses
+StudentsListDB --> Student : uses
+@enduml
+
+//www.plantuml.com/plantuml/png/lLR1Rjms4BthAmGOABYrzGD6rQPfK1H5sXwSIqy49OvNh2dI8Id7Rff_BuUYTggbTh60WnuiaPodDpDlXhD-uuDmOHfrrMlXVVrMUBWBamGJwizLNLz_Ze2W-Y_raz1AYW1yhmABVxlIofLaIYQ3alYCiBGnAgW8-1kY-VQcZiUtjL4w8zlbeyN53onj1-5vRqqGVQ2Jw3xlhkAgdIFvKkNmjqFl7M3WzywEt0Udp9xDhuqS4b1PPiG89yoFWpN0y7aA0QDGcgNd2KG03NidHhOi4ivF3ltYSda_Yk2iUHbLZxjEkJ1mP3ZIDNyPnSql-YvkwBEuKJA97o6OGLwdMFCwIffNIt1KBM9g6QsJQGzXATUf-dc2U4RkoL4HpO5PcNiRIR8oRQuFQTOk4kpMghMCrgbhajkModULdBLKhQibc9QAKtGOzuDrv_iiuLX-fwWatDTjMpCR1d2xIrkKSkIvu1xFiewu39PxjikhOLlyagHbiHidG5kpSKFZy_YBU9GfKsrALJuuW5aJ8UKgTH3zmBxfjEqVaiDevmxwoNdr1CnO2T4TuPlWn1CuZxwvTH9SncIAmhD_hto8mokxlrSQU2pyS7HD3kVepOa0-vSKdWCXkT1wLkgJKm5eY-sNO-FT2msvP7ZW1etK4rmh7zX3l8WtjHH1f7tT7fhPMvTeK5csorfjjilqY7VhO5BoffwFPZXrbOOLh0YwjrCq95qV1OgACf0MoU2ZtZpO8zESGYatgdsN1PmLFqLyVJ4nrV7Nkpz-__giV_xus_klm_ekRf4HsLRjPRk_e0y-ppeTrynCOmUEIf9EGL9dOHzusgAh_FC61b1XxkmdFjCmPIGy9oiy1oVwm4K8JdLJ09-z9sicBKFEWjmTfbTprarpraspwUQ3w3GKqimIvYH1muYz6btYID79WFwfKw_ZyJIQvOHS_AmqKEijbvUgHJVuJ0MnmrvDWWtrIXBgK4ph5s6a1ZTp-Snyf6CnjYxsHnNgX8UVh37G1sLDKQh4yt42zyBynxasy0pz523jjs_NkxTboJlU7xoyQfB-hsCIy_llly7V_TCqIwgR1eguAdwDB4BAcLbjd2M-OWvUXiHMhFBD8CYgpKlpge6hPK8aq-Qyg2hwcLzbTZ9jKeRelsqQ6XFLHliZOdNBgvA_QRvVyzUtzUJ1LyVo8R9CflY0LBpW0zA0ma3pA8pOWz_A2P6hd2BS5-dbUuJOyfgI_mASZnR46p1o6lM_

@@ -14,11 +14,11 @@ class StudentsListBase
   end
 
   def read_all
-    @students = @strategy.parse_file(file_path) || []
+    @students = parse_file(file_path) || []
   end
 
   def write_all
-    @strategy.save_to_file(file_path, @students)
+    save_to_file(file_path, @students)
   end
 
   def get_student_by_id(id)
@@ -45,6 +45,12 @@ class StudentsListBase
   end
 
   def add_student(student)
+    new_student = StudentShort.new(student)
+
+    if @students.any? { |s| StudentShort.new(s) == new_student }
+      raise "Студент с таким контактом уже существует"
+    end
+
     new_id = (@students.map { |s| s[:id] }.max || 0) + 1
     student[:id] = new_id
     @students << student
@@ -65,5 +71,15 @@ class StudentsListBase
 
   def get_student_count
     @students.size
+  end
+
+  private
+
+  def parse_file(file_path)
+    @strategy.parse_file(file_path)
+  end
+
+  def save_to_file(file_path, data)
+    @strategy.save_to_file(file_path, data)
   end
 end

@@ -12,6 +12,11 @@ class Student_short < BaseStudent
     )
   end
 
+  def ==(other)
+    return false unless other.is_a?(StudentShort)
+    self.contact == other.contact
+  end
+
   def self.create_from_string(string)
     attributes = {}
 
