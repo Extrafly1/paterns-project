@@ -193,7 +193,7 @@ yaml_handler.write('students_new.yaml', new_students)
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\DatabaseConnection.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\StudentsListDB.rb'
 # Создаём подключение к базе данных
-db_connection = DatabaseConnection.new
+db_connection = DatabaseConnection.instance
 
 # Создаём объект для работы со списком студентов в базе данных
 students_list_db = StudentsListDB.new(db_connection)
