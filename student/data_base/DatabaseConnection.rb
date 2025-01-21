@@ -1,10 +1,10 @@
 require 'oci8'
 
 class DatabaseConnection
-  @instance = nil
+  @@instance = nil
 
   def self.instance
-    @instance ||= new
+    @@instance ||= new
   end
 
   private_class_method :new
