@@ -1,0 +1,209 @@
+@startuml
+class BaseStudent {
+  +{static} validate_git(git)
+  +{static} valid_id(id)
+  +id
+  +git
+  +initialize(id:, git: nil)
+  +id=(id)
+  +validate?()
+  +has_contact?()
+  +has_git?()
+  #git=(git)
+}
+
+class Student {
+  +{static} create_from_string(string)
+  +{static} validate_fio(name)
+  +{static} validate_phone(phone)
+  +{static} validate_email(email)
+  +{static} validate_telegram(telegram)
+  +surname
+  +name
+  +patronymic
+  +birth_date
+  +initialize(surname:, name:, patronymic:, birth_date:, id: nil, phone: nil, email: nil, git: nil, telegram: nil)
+  +birth_date=(birth_date)
+  +get_contact()
+  +has_contact?()
+  +set_contacts(phone: nil, telegram: nil, email: nil)
+  +get_info()
+  +name=(name)
+  +surname=(surname)
+  +patronymic=(patronymic)
+  #phone=(phone)
+  #email=(email)
+  #telegram=(telegram)
+}
+
+class Student_short {
+  +{static} create_from_student(student)
+  +def == (other)
+  +{static} create_from_string(string)
+  +surname_initials
+  +contact
+  +to_s()
+  +to_h()
+  +has_contact?()
+  +surname_initials=(value)
+  -initialize(id:, git:, surname_initials:, contact: nil)
+}
+
+class StudentTree {
+  +add(student)
+  +each(&block)
+  -add_recursive(node, student)
+  -traverse_in_order(node, &block)
+}
+
+class StudentsListBase {
+  +file_path
+  +initialize(file_path, strategy)
+  +read_all()
+  +write_all()
+  +get_student_by_id(id)
+  +get_k_n_student_short_list(k, n, data_list = nil)
+  +sort_by_name()
+  +add_student(student)
+  +update_student(id, updated_student)
+  +delete_student(id)
+  +get_student_count()
+  -parse_file(file_path)
+  -save_to_file(file_path, data)
+}
+
+class StudentListStrategy {
+  +parse_file(file_path)
+  +save_to_file(file_path, data)
+}
+
+class StudentsListJSON {
+  +parse_file(file_path)
+  +save_to_file(file_path, data)
+}
+
+class StudentsListYAML {
+  +parse_file(file_path)
+  +save_to_file(file_path, data)
+}
+
+class DataList {
+  +initialize(objects)
+  +select(number)
+  +get_selected()
+  +get_names()
+  +get_data()
+  #generate_row_number(index)
+  #extract_attributes(object)
+  #names()
+}
+
+class DataListStudentShort {
+  -generate_row_number(index)
+  -extract_attributes(object)
+  -names()
+  +data
+  +view
+  +notify()
+}
+
+class DataTable {
+  +initialize(data)
+  +get_element(row, col)
+  +row_count()
+  +column_count()
+}
+
+class FileStrategy {
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class JSONStrategy {
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class YAMLStrategy {
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class StudentsFileHandler {
+  +strategy
+  +initialize(strategy)
+  +read(file_path)
+  +write(file_path, data)
+}
+
+class DatabaseConnection {
+  +{static} instance()
+  +initialize()
+  +query(sql)
+  +execute(sql)
+  -{static} new()
+}
+
+class StudentsListDB {
+  +initialize(db_connection)
+  +get_student_by_id(id)
+  +get_k_n_student_short_list(k, n)
+  +add_student(student)
+  +update_student(id, updated_student)
+  +delete_student(id)
+  +get_student_count()
+}
+
+class StudentListController {
+  +initialize(view, database_connection)
+  +refresh_data()
+  +add_student(student)
+  +edit_student(id, updated_student)
+  +delete_student(id)
+  +change_page(direction)
+}
+
+class StudentApp {
+  +controller
+  +current_page
+  +rows_per_page
+  +data_list_student_short
+  +initialize(app)
+  +create_interface()
+  +change_page(direction)
+  +total_pages()
+  +update_button_states(editButton, deleteButton)
+  +add_student()
+  +edit_student()
+  +delete_student()
+  +handleClose()
+  +set_table_params(column_names, row_count)
+  +set_table_data(data)
+}
+
+BaseStudent <|-- Student
+BaseStudent <|-- Student_short
+StudentsListBase o-- StudentListStrategy
+StudentListStrategy <|-- StudentsListJSON
+StudentListStrategy <|-- StudentsListYAML
+FileStrategy <|-- JSONStrategy
+FileStrategy <|-- YAMLStrategy
+DataList <|-- DataListStudentShort
+
+StudentTree o-- Student
+StudentsListBase o-- Student_short
+DataList *-- DataTable
+StudentsFileHandler *-- FileStrategy
+
+StudentsListBase --> Student_short : uses
+StudentsListJSON --> DataListStudentShort : uses
+StudentsListYAML --> DataListStudentShort : uses
+StudentTree --> Student : manages
+StudentsFileHandler --> FileStrategy : strategy
+
+StudentsListDB --> DatabaseConnection : uses
+StudentsListDB --> Student : uses
+
+StudentApp --> StudentListController : uses
+StudentApp --> DataListStudentShort : uses
+@enduml

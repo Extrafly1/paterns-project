@@ -1,0 +1,18 @@
+@startuml
+actor User
+participant "StudentApp" as App
+participant "StudentListController" as Controller
+participant "StudentsListDB" as DB
+participant "DataListStudentShort" as DataList
+
+User -> App : Нажимает "Обновить"
+App -> Controller : refresh_data()
+Controller -> App : Получает текущую страницу и количество студентов на странице
+Controller -> DB : get_k_n_student_short_list(page_number, students_per_page)
+DB -> Controller : Возвращает список студентов
+Controller -> DataList : data = students
+Controller -> DataList : notify()
+DataList -> App : set_table_params(column_names, row_count)
+DataList -> App : set_table_data(data)
+App -> User : Обновляет таблицу студентов
+@enduml
