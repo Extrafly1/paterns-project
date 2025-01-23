@@ -212,11 +212,9 @@ new_student = Student.new(
 )
 
 new_student_id = students_list_db.add_student(new_student)
-puts "Добавлен студент с ID: #{new_student_id}"
 
 # Получаем студента по ID
 student = students_list_db.get_student_by_id(1)
-puts "Получен студент: #{student}"
 
 # Обновляем информацию о студенте
 updated_student = Student.new(  
@@ -231,12 +229,9 @@ updated_student = Student.new(
   telegram: '@test'
 )
 students_list_db.update_student(1, updated_student)
-puts "Студент обновлён: #{students_list_db.get_student_by_id(new_student_id)}"
 
 # Получаем количество студентов
 student_count = students_list_db.get_student_count
-puts "Количество студентов: #{student_count}"
 
 # Удаляем студента
 students_list_db.delete_student(new_student_id)
-puts "Студент с ID #{new_student_id} удалён"

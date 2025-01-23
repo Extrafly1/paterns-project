@@ -21,11 +21,10 @@ class DatabaseConnection
   end
 
   def execute(sql)
-    # Выполняем SQL-запрос
     result = @client.execute(sql)
-    result.each do |row|
-      puts row
-    end
+    #result.each do |row|
+    #  puts row
+    #end
   end
 
   def query(sql)
