@@ -215,8 +215,8 @@ new_student_id = students_list_db.add_student(new_student)
 puts "Добавлен студент с ID: #{new_student_id}"
 
 # Получаем студента по ID
-# student = students_list_db.get_student_by_id(1)
-# puts "Получен студент: #{student}"
+student = students_list_db.get_student_by_id(1)
+puts "Получен студент: #{student}"
 
 # Обновляем информацию о студенте
 updated_student = Student.new(  

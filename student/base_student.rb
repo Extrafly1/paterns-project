@@ -2,7 +2,7 @@ class BaseStudent
   attr_reader :id, :git
 
   def initialize(id:, git: nil)
-    self.id = id
+    self.id = id.to_s
     self.git = git if !git.nil?
   end
   # validators for setters

@@ -1,4 +1,4 @@
-require 'oci8'
+require 'tiny_tds'
 
 class DatabaseConnection
   @instance = nil
@@ -10,21 +10,30 @@ class DatabaseConnection
   private_class_method :new
 
   def initialize
-    @connection = OCI8.new('SYS', '123', '//localhost:1521/XE', :SYSDBA)
-  end
-
-  def query(sql)
-    cursor = @connection.exec(sql)
-    result = []
-    while row = cursor.fetch_hash
-      result << row
-    end
-    cursor.close
-    result
+    @client = TinyTds::Client.new(
+      username: '',
+      password: '',
+      host: 'DESKTOP-F9CE6LM',
+      database: 'STUDENT_SHORT',
+      azure: false,
+      timeout: 5
+    )
   end
 
   def execute(sql)
-    @connection.exec(sql)
-    @connection.commit
+    # Выполняем SQL-запрос
+    result = @client.execute(sql)
+    result.each do |row|
+      puts row
+    end
+  end
+
+  def query(sql)
+    result = []
+    cursor = @client.execute(sql)
+    cursor.each do |row|
+      result << row
+    end
+    result
   end
 end
