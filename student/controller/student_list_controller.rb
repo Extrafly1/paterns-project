@@ -1,34 +1,36 @@
-class StudentListController
-  attr_reader :students_list
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\StudentsListDB.rb'
 
-  def initialize(view, students_list_db)
+class StudentListController
+  attr_accessor :view, :students_db
+
+  def initialize(view, database_connection)
     @view = view
-    @students_list = students_list_db
+    @students_db = StudentsListDB.new(database_connection)
     @view.controller = self
   end
 
-  def add_student(student_data)
-    student = Student.new(student_data)
-    @students_list.add_student(student)
-    @view.refresh_student_list(@students_list.get_all_students)
+  def refresh_data
+    students = @students_db.get_all_students
+    @view.set_table_params(["ID", "Фамилия", "Имя", "Отчество", "Дата рождения", "Телефон", "Email", "Git", "Telegram"], students.size)
+    @view.set_table_data(students)
   end
 
-  def update_student(id, updated_data)
-    updated_student = Student.new(updated_data)
-    @students_list.update_student(id, updated_student)
-    @view.refresh_student_list(@students_list.get_all_students)
+  def add_student(student)
+    @students_db.add_student(student)
+    refresh_data
+  end
+
+  def edit_student(id, updated_student)
+    @students_db.update_student(id, updated_student)
+    refresh_data
   end
 
   def delete_student(id)
-    @students_list.delete_student(id)
-    @view.refresh_student_list(@students_list.get_all_students)
+    @students_db.delete_student(id)
+    refresh_data
   end
 
-  def get_student_by_id(id)
-    @students_list.get_student_by_id(id)
+  def change_page(direction)
+    @view.change_page(direction)
   end
-
-  def get_student_count
-    @students_list.get_student_count
-  end
-end 
+end
