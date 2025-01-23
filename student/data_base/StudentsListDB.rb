@@ -28,10 +28,55 @@ class StudentsListDB
     end
   end
 
+  def get_k_n_student_list(k, n)
+    offset = (k - 1) * n
+    query = <<-SQL
+      SELECT * FROM student
+      ORDER BY id
+      OFFSET #{offset} ROWS
+      FETCH NEXT #{n} ROWS ONLY
+    SQL
+
+    result = @db.query(query)
+    result.map do |row|
+      Student.new(
+        id: row['id'],
+        surname: row['surname'],
+        name: row['name'],
+        patronymic: row['patronymic'],
+        birth_date: row['birth_date'].to_s,
+        phone: row['phone'],
+        email: row['email'],
+        git: row['git'],
+        telegram: row['telegram']
+      )
+    end
+  end
+
   def get_k_n_student_short_list(k, n)
     offset = (k - 1) * n
-    result = @db.query("SELECT * FROM (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM student ORDER BY id) a WHERE ROWNUM <= #{offset + n}) WHERE rnum > #{offset}")
-    result.map { |row| Student_short.new(row) }
+    query = <<-SQL
+      SELECT * FROM student
+      ORDER BY id
+      OFFSET #{offset} ROWS
+      FETCH NEXT #{n} ROWS ONLY
+    SQL
+
+    result = @db.query(query)
+    result.map do |row|
+      student = Student.new(
+        id: row['id'],
+        surname: row['surname'],
+        name: row['name'],
+        patronymic: row['patronymic'],
+        birth_date: row['birth_date'].to_s,
+        phone: row['phone'],
+        email: row['email'],
+        git: row['git'],
+        telegram: row['telegram']
+      )
+      Student_short.create_from_student(student)
+    end
   end
 
   def add_student(student)

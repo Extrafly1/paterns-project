@@ -2,19 +2,16 @@ require_relative 'C:\abc\кубгу\3 курс\патерны проектиро
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_table.rb'
 
 class DataListStudentShort < DataList
-  attr_accessor :view
+  attr_accessor :data, :view
 
-  def initialize(students)
-    @students = students
+  def initialize
+    @data = []
   end
 
   def notify
-    column_names = ["ID", "Фамилия", "Имя"]
-    whole_entities_count = @students.size
-    data_table = @students.map { |student| [student[0], student[1], student[2]] }
-
-    @view.set_table_params(column_names, whole_entities_count)
-    @view.set_table_data(data_table)
+    column_names = ["ID", "Фамилия", "Имя", "Отчество", "Дата рождения", "Телефон", "Email", "Git", "Telegram"]
+    @view.set_table_params(column_names, @data.size)
+    @view.set_table_data(@data)
   end
 
   private

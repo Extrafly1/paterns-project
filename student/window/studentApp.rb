@@ -3,8 +3,22 @@ include Fox
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\DatabaseConnection.rb'
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\controller\student_list_controller.rb'
 
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\base_student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_short.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\StudentTree.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_list_student_short.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_json.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_yaml.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\student_list_base.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\file_strategy.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\json_strategy.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\strategy\yaml_strategy.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\students_file_handler.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\StudentListStrategy.rb'
+
 class StudentApp < FXMainWindow
-  attr_accessor :controller
+  attr_accessor :controller, :current_page, :rows_per_page, :data_list_student_short
 
   def initialize(app)
     super(app, "Student Application", width: 800, height: 600)
@@ -14,8 +28,15 @@ class StudentApp < FXMainWindow
     # Инициализация переменных для пагинации
     @current_page = 0
     @rows_per_page = 20
-    @students = [] # Инициализация пустого массива для студентов
 
+    # Инициализация data_list_student_short
+    @data_list_student_short = DataListStudentShort.new
+
+    # Создание интерфейса
+    create_interface
+  end
+
+  def create_interface
     # Создание вкладок
     tabBook = FXTabBook.new(self, opts: LAYOUT_FILL_X|LAYOUT_FILL_Y)
 
@@ -140,45 +161,6 @@ class StudentApp < FXMainWindow
     end
   end
 
-  def set_table_params(column_names, whole_entities_count)
-    @studentTable.setTableSize(whole_entities_count, column_names.size)
-    column_names.each_with_index do |name, index|
-      @studentTable.setColumnText(index, name)
-    end
-  end
-
-  def set_table_data(data_table)
-    @students = data_table # Обновление @students с данными из контроллера
-    @studentTable.setTableSize([@students.size, @rows_per_page].max, 9) # Установка размера таблицы
-    update_table
-  end
-
-  def update_table
-    start_index = @current_page * @rows_per_page
-    end_index = [start_index + @rows_per_page, @students.size].min
-
-    (0...@rows_per_page).each do |row|
-      if start_index + row < end_index
-        student = @students[start_index + row]
-        @studentTable.setItemText(row, 0, student['id'].to_s)
-        @studentTable.setItemText(row, 1, student['surname'])
-        @studentTable.setItemText(row, 2, student['name'])
-        @studentTable.setItemText(row, 3, student['patronymic'])
-        @studentTable.setItemText(row, 4, student['birth_date'].to_s)
-        @studentTable.setItemText(row, 5, student['phone'])
-        @studentTable.setItemText(row, 6, student['email'])
-        @studentTable.setItemText(row, 7, student['git'])
-        @studentTable.setItemText(row, 8, student['telegram'])
-      else
-        (0..8).each { |col| @studentTable.setItemText(row, col, "") }
-      end
-    end
-
-    if @pageLabel
-      @pageLabel.text = "Страница #{@current_page + 1} из #{total_pages}"
-    end
-  end
-
   def change_page(direction)
     new_page = @current_page + direction
     if new_page >= 0 && new_page < total_pages
@@ -188,7 +170,8 @@ class StudentApp < FXMainWindow
   end
 
   def total_pages
-    (@students.size / @rows_per_page.to_f).ceil
+    student_count = @data_list_student_short.data ? @data_list_student_short.data.size : 0
+    (student_count / @rows_per_page.to_f).ceil
   end
 
   def update_button_states(editButton, deleteButton)
@@ -213,6 +196,21 @@ class StudentApp < FXMainWindow
 
   def handleClose
     exit
+  end
+
+  def set_table_params(column_names, row_count)
+    @studentTable.setTableSize(row_count, column_names.size)
+    column_names.each_with_index do |name, index|
+      @studentTable.setColumnText(index, name)
+    end
+  end
+
+  def set_table_data(data)
+    data.each_with_index do |student_short, row|
+      student_short.to_h.each_with_index do |(key, value), col|
+        @studentTable.setItemText(row, col, value.to_s)
+      end
+    end
   end
 end
 

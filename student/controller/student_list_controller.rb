@@ -1,18 +1,32 @@
 require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\StudentsListDB.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_list_student_short.rb'
 
 class StudentListController
-  attr_accessor :view, :students_db
+  attr_accessor :view, :students_db, :data_list_student_short
 
   def initialize(view, database_connection)
     @view = view
     @students_db = StudentsListDB.new(database_connection)
+    @data_list_student_short = DataListStudentShort.new
+    @data_list_student_short.view = @view # Установите view в data_list_student_short
     @view.controller = self
   end
 
   def refresh_data
-    students = @students_db.get_all_students
-    @view.set_table_params(["ID", "Фамилия", "Имя", "Отчество", "Дата рождения", "Телефон", "Email", "Git", "Telegram"], students.size)
-    @view.set_table_data(students)
+    page_number = @view.current_page + 1
+    students_per_page = @view.rows_per_page
+
+    # Убедитесь, что page_number не меньше 1
+    page_number = [page_number, 1].max
+
+    begin
+      # Получаем список студентов
+      students = @students_db.get_k_n_student_short_list(page_number, students_per_page)
+      @data_list_student_short.data = students
+      @data_list_student_short.notify
+    rescue StandardError => e
+      puts "Ошибка при обновлении данных: #{e.message}"
+    end
   end
 
   def add_student(student)

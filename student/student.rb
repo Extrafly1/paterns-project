@@ -155,4 +155,18 @@ class Student < BaseStudent
       raise ArgumentError, "Неправильно введен телеграм"
     end
   end
+
+  def to_h
+    {
+      id: @id,
+      surname: @surname,
+      name: @name,
+      patronymic: @patronymic,
+      birth_date: @birth_date,
+      phone: @phone,
+      email: @email,
+      git: @git,
+      telegram: @telegram
+    }
+  end
 end
