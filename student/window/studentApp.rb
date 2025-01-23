@@ -1,8 +1,13 @@
 require 'fox16'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\controller\student_list_controller.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\StudentsListDB.rb'
+require_relative 'C:\abc\кубгу\3 курс\патерны проектирования\student\data_base\DatabaseConnection.rb'
 
 include Fox
 
 class StudentApp < FXMainWindow
+  attr_accessor :controller
+
   def initialize(app)
     super(app, "Student Management", width: 800, height: 600)
 
@@ -24,6 +29,13 @@ class StudentApp < FXMainWindow
     tab3_frame = FXHorizontalFrame.new(tab_book, LAYOUT_FILL)
     # Здесь будет содержимое третьей вкладки
 
+    # Создаем экземпляр базы данных
+    database_connection = DatabaseConnection.instance
+    students_list_db = StudentsListDB.new(database_connection)
+
+    # Создаем контроллер и передаем ему представление
+    @controller = StudentListController.new(self, students_list_db)
+
     # Обработчик закрытия окна
     self.connect(SEL_CLOSE) do
       app.exit
@@ -33,6 +45,13 @@ class StudentApp < FXMainWindow
   def create
     super
     show(PLACEMENT_SCREEN)
+  end
+
+  # Метод для обновления списка студентов в интерфейсе
+  def refresh_student_list(students)
+    # Логика для обновления списка студентов в интерфейсе
+    puts "Обновленный список студентов:"
+    students.each { |student| puts student.to_s }
   end
 end
 
