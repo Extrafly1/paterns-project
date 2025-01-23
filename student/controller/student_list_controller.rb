@@ -3,8 +3,8 @@ class StudentListController
 
   def initialize(view, students_list_db)
     @view = view
-    @students_list = students_list_db  # Используем StudentsListDB для работы с базой данных
-    @view.controller = self  # Сохраняем ссылку на контроллер в представлении
+    @students_list = students_list_db
+    @view.controller = self
   end
 
   def add_student(student_data)
