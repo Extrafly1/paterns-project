@@ -9,7 +9,7 @@ class DataListStudentShort < DataList
   end
 
   def notify
-    column_names = ["ID", "Фамилия", "Имя", "Отчество", "Дата рождения", "Телефон", "Email", "Git", "Telegram"]
+    column_names = ["ID", "ФИО", "GIT", "Контакты"]
     @view.set_table_params(column_names, @data.size)
     @view.set_table_data(@data)
   end

@@ -114,16 +114,11 @@ class StudentApp < FXMainWindow
 
     # Таблица студентов
     @studentTable = FXTable.new(studentFrame, opts: LAYOUT_FILL_X|LAYOUT_FILL_Y|TABLE_READONLY)
-    @studentTable.setTableSize(20, 9)
+    @studentTable.setTableSize(20, 4)
     @studentTable.setColumnText(0, "ID")
-    @studentTable.setColumnText(1, "Фамилия")
-    @studentTable.setColumnText(2, "Имя")
-    @studentTable.setColumnText(3, "Отчество")
-    @studentTable.setColumnText(4, "Дата рождения")
-    @studentTable.setColumnText(5, "Телефон")
-    @studentTable.setColumnText(6, "Email")
-    @studentTable.setColumnText(7, "Git")
-    @studentTable.setColumnText(8, "Telegram")
+    @studentTable.setColumnText(1, "ФИО")
+    @studentTable.setColumnText(2, "GIT")
+    @studentTable.setColumnText(3, "Контакты")
 
     # Обновление данных из базы данных
     @controller.refresh_data
@@ -166,21 +161,23 @@ class StudentApp < FXMainWindow
     if new_page >= 0 && new_page < total_pages
       @current_page = new_page
       update_table
+      update_page_label
     end
   end
 
   def total_pages
     student_count = @data_list_student_short.data ? @data_list_student_short.data.size : 0
-    (student_count / @rows_per_page.to_f).ceil
+    [1, (student_count / @rows_per_page.to_f).ceil].max
   end
 
   def update_button_states(editButton, deleteButton)
-    selected_rows = @studentTable.selStart...@studentTable.selEnd
+    selected_rows = @studentTable.selStartRow...@studentTable.selEndRow
     selected_count = selected_rows.count { |row| @studentTable.rowSelected?(row) }
-
+  
     editButton.enabled = (selected_count == 1)
     deleteButton.enabled = (selected_count > 0)
   end
+  
 
   def add_student
     # Логика добавления студента
